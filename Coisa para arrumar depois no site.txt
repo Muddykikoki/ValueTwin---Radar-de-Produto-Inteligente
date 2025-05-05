@@ -1,0 +1,11 @@
+Coisa para arrumar depois no site:
+Clique no logo tem que voltar para a pagina inicial
+tamanho botão seja parceiro
+alinhar a seta para baixo do precisa de ajuda para o fim do botão
+parte do como usar fazer com que os vídeos fechem 
+fazer o vídeo se adaptar á tela
+caixa da transcrição do vídeo grudada no vim da tela 
+fazer um sistema básico para os cads serem gerados automaticamente
+e fazer com que a ordenação [Relevancia,Preço,Nedia de avaliação, Próximo de voce] funcione
+fazer que a parte do precisa de ajuda funcione
+filtros funcione na parte de busca

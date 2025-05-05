@@ -1,0 +1,1787 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ValueTwin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* Cores Principais */
+            --rosa-profundo: #F53A8E;
+            --salmao: #FE8878;
+            --roxo-indigo: #5043F6;
+            --lavanda-pastel: #A67BF6;
+
+            /* Cores de Fundo */
+            --preto-licorico: #382D34;
+            --marrom-kona: #584752;
+            --preto-rocha: #2D2C39;
+            --cinza-eclipse: #47455A;
+
+            /* Cores de Texto */
+            --texto-1: #F1E1EB;
+            --texto-2: #AF8FA4;
+            --texto-3: #705A68;
+            --texto-4: #E8E6FF;
+            --texto-5: #8E8BB3;
+            --texto-6: #5A5872;
+
+            /* Cores das Estrelas */
+            --estrela-preco: #5A5872;
+            --estrela-comentarios: #FFD700;
+            --estrela-tecnica: #1E90FF;
+            --estrela-media: #FF69B4;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--preto-rocha);
+            color: var(--texto-1);
+        }
+
+        /* Header */
+        header {
+            background-color: var(--preto-licorico);
+            padding: 1rem 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        /* Botão do Tutorial */
+            .tutorial-btn {
+                background-color: var(--lavanda-pastel);
+                color: var(--preto-rocha);
+                border: none;
+                padding: 0.8rem 1.2rem;
+                border-radius: 0.3rem;
+                cursor: pointeValueTwin - Radar de Produto Inteligenter;
+                font-weight: bold;
+                transition: background-color 0.3s;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                white-space: nowrap;
+            }
+
+            .tutorial-btn:hover {
+                background-color: var(--roxo-indigo);
+                color: white;
+            }
+
+            @media (max-width: 768px) {
+                .tutorial-btn {
+                    order: 4;
+                    width: 100%;
+                    justify-content: center;
+                }
+            }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--lavanda-pastel);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .logo i {
+            color: var(--rosa-profundo);
+        }
+
+        .search-bar {
+            flex: 1;
+            min-width: 250px;
+            display: flex;
+            background-color: var(--cinza-eclipse);
+            border-radius: 2rem;
+            overflow: hidden;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 0.8rem 1.2rem;
+            border: none;
+            background-color: transparent;
+            color: var(--texto-1);
+            font-size: 1rem;
+        }
+
+        .search-bar input::placeholder {
+            color: var(--texto-5);
+        }
+
+        .search-bar button {
+            padding: 0 1.5rem;
+            border: none;
+            background-color: var(--roxo-indigo);
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .search-bar button:hover {
+            background-color: var(--lavanda-pastel);
+        }
+
+        .price-range {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .price-range input {
+            width: 80px;
+            padding: 0.5rem;
+            background-color: var(--cinza-eclipse);
+            border: 1px solid var(--texto-6);
+            border-radius: 0.3rem;
+            color: var(--texto-1);
+        }
+
+        .price-range span {
+            color: var(--texto-2);
+        }
+
+        /* Filtros */
+        .filter-section {
+            display: flex;
+            justify-content: center;
+            padding: 1rem 0;
+            background-color: var(--marrom-kona);
+            position: relative;
+        }
+
+        .filter-btn {
+            position: relative;
+            background: none;
+            border: none;
+            color: var(--texto-4);
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .filter-btn:hover {
+            color: var(--lavanda-pastel);
+        }
+
+        .filter-btn i {
+            transition: transform 0.3s;
+        }
+
+        .filter-btn.active i {
+            transform: rotate(180deg);
+        }
+
+        .filter-panel {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: var(--cinza-eclipse);
+            padding: 1.5rem;
+            border-radius: 0 0 0.5rem 0.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+            display: none;
+        }
+
+        .filter-panel.active {
+            display: block;
+        }
+
+        .basic-filters {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .advanced-filters {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .filter-group {
+            margin-bottom: 1rem;
+        }
+
+        .filter-group h3 {
+            margin-bottom: 0.5rem;
+            color: var(--texto-4);
+            font-size: 1rem;
+        }
+
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .filter-option {
+            background-color: var(--preto-rocha);
+            border: 1px solid var(--texto-6);
+            color: var(--texto-2);
+            padding: 0.3rem 0.8rem;
+            border-radius: 1rem;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-option:hover, .filter-option.selected {
+            background-color: var(--roxo-indigo);
+            color: var(--texto-1);
+            border-color: var(--lavanda-pastel);
+        }
+
+        .slider-container {
+            padding: 0.5rem 0;
+        }
+
+        .slider-container input[type="range"] {
+            width: 100%;
+            height: 5px;
+            background: var(--texto-6);
+            border-radius: 5px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider-container input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 15px;
+            height: 15px;
+            background: var(--lavanda-pastel);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .apply-filters {
+            margin-top: 1rem;
+            padding: 0.7rem 1.5rem;
+            background-color: var(--rosa-profundo);
+            color: white;
+            border: none;
+            border-radius: 0.3rem;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .apply-filters:hover {
+            background-color: var(--salmao);
+        }
+
+        /* Carrossel de Anúncios */
+        .promo-carousel {
+            padding: 2rem;
+            background-color: var(--preto-licorico);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .promo-slide {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .promo-item {
+            min-width: 100%;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .promo-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 1rem;
+        }
+
+        .carousel-nav button {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+
+        .carousel-nav button:hover {
+            background-color: var(--roxo-indigo);
+        }
+
+        /* Lojas Parceiras */
+        .partner-section {
+            padding: 2rem;
+            background-color: var(--marrom-kona);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--texto-4);
+            position: relative;
+            padding-left: 1rem;
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 5px;
+            background-color: var(--rosa-profundo);
+            border-radius: 5px;
+        }
+
+        .partners-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .partners-slider {
+            display: flex;
+            gap: 2rem;
+            transition: transform 0.5s ease;
+        }
+
+        .partner-card {
+            min-width: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .partner-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--preto-rocha);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 2px solid var(--lavanda-pastel);
+        }
+
+        .partner-logo img {
+            width: 70%;
+            height: 70%;
+            object-fit: contain;
+        }
+
+        .partner-name {
+            font-size: 0.9rem;
+            color: var(--texto-2);
+            text-align: center;
+            max-width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .slider-control {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+            z-index: 2;
+        }
+
+        .slider-control:hover {
+            background-color: var(--roxo-indigo);
+        }
+
+        .slider-prev {
+            left: 0;
+        }
+
+        .slider-next {
+            right: 0;
+        }
+
+        /* Produtos em Destaque */
+        .featured-products {
+            padding: 2rem;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background-color: var(--cinza-eclipse);
+            border-radius: 0.5rem;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .product-image {
+            padding: 1rem;
+            background-color: white;
+            text-align: center;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .product-info {
+            padding: 1.2rem;
+        }
+
+        .product-name {
+            font-size: 1rem;
+            color: var(--texto-1);
+            margin-bottom: 0.5rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            height: 2.8em;
+            line-height: 1.4em;
+        }
+
+        .product-name:hover::after {
+            content: attr(data-fullname);
+            position: absolute;
+            background-color: var(--preto-rocha);
+            color: var(--texto-1);
+            padding: 0.5rem;
+            border-radius: 0.3rem;
+            z-index: 10;
+            max-width: 250px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            font-size: 0.9rem;
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--lavanda-pastel);
+            margin-bottom: 0.8rem;
+        }
+
+        .product-ratings {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .rating-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .rating-stars {
+            display: flex;
+            gap: 0.2rem;
+        }
+
+        .rating-stars i {
+            font-size: 0.9rem;
+        }
+
+        .stars-green {
+            color: var(--estrela-preco);
+        }
+
+        .stars-yellow {
+            color: var(--estrela-comentarios);
+        }
+
+        .stars-blue {
+            color: var(--estrela-tecnica);
+        }
+
+        .stars-pink {
+            color: var(--estrela-media);
+        }
+
+        .rating-value {
+            font-size: 0.9rem;
+            color: var(--texto-2);
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 0.8rem;
+            border-top: 1px solid var(--texto-6);
+        }
+
+        .delivery-time {
+            font-size: 0.8rem;
+            color: var(--texto-2);
+        }
+
+        .store-info {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            position: relative;
+        }
+
+        .store-logo {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .store-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .store-name {
+            font-size: 0.8rem;
+            color: var(--texto-2);
+            max-width: 80px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .store-name:hover::after {
+            content: attr(data-fullname);
+            position: absolute;
+            bottom: 100%;
+            left: 0;
+            background-color: var(--preto-rocha);
+            color: var(--texto-1);
+            padding: 0.3rem 0.5rem;
+            border-radius: 0.3rem;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            z-index: 10;
+        }
+
+        /* Página de Tutorial */
+        .tutorial-page {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tutorial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .tutorial-item {
+            background-color: var(--cinza-eclipse);
+            border-radius: 0.5rem;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .tutorial-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .tutorial-thumbnail {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            background-color: var(--preto-rocha);
+            overflow: hidden;
+        }
+
+        .tutorial-thumbnail video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .tutorial-title {
+            padding: 1rem;
+            font-size: 1rem;
+            color: var(--texto-1);
+        }
+
+        .video-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .video-modal.active {
+            display: flex;
+        }
+
+        .modal-video-container {
+            width: 80%;
+            max-width: 1000px;
+            position: relative;
+        }
+
+        .modal-video {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background-color: black;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .video-transcript {
+            margin-top: 2rem;
+            max-width: 800px;
+            background-color: var(--preto-rocha);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            color: var(--texto-1);
+            line-height: 1.6;
+        }
+
+        /* Ordenação */
+        .sort-options {
+            padding: 1rem 2rem;
+            background-color: var(--marrom-kona);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .sort-btn {
+            background-color: var(--preto-rocha);
+            border: 1px solid var(--texto-6);
+            color: var(--texto-2);
+            padding: 0.5rem 1rem;
+            border-radius: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .sort-btn:hover, .sort-btn.active {
+            background-color: var(--roxo-indigo);
+            color: var(--texto-1);
+            border-color: var(--lavanda-pastel);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--preto-licorico);
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-info {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .contact-info h3 {
+            color: var(--texto-4);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .contact-info p {
+            color: var(--texto-2);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-actions {
+            flex: 1;
+            min-width: 250px;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .help-btn {
+            background-color: var(--rosa-profundo);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.3rem;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            text-align: left;
+            position: relative;
+        }
+
+        .help-btn:hover {
+            background-color: var(--salmao);
+        }
+
+        .help-options {
+            position: absolute;
+            bottom: 100%;
+            left: 0;
+            width: 100%;
+            background-color: var(--cinza-eclipse);
+            border-radius: 0.3rem 0.3rem 0 0;
+            overflow: hidden;
+            display: none;
+        }
+
+        .help-options.active {
+            display: block;
+        }
+
+        .help-option {
+            padding: 0.8rem 1.5rem;
+            color: var(--texto-1);
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .help-option:hover {
+            background-color: var(--roxo-indigo);
+        }
+        .partner-btn {
+            background-color: var(--roxo-indigo);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.3rem;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            text-align: left;
+            
+        }
+
+        .partner-btn:hover {
+            background-color: var(--lavanda-pastel);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--texto-6);
+            color: var(--texto-3);
+            font-size: 0.9rem;
+        }
+        .help-btn,
+        .partner-btn {
+            white-space: nowrap;      
+            overflow: hidden;         
+            text-overflow: ellipsis;  
+            display: inline-flex;     
+            justify-content: center;  
+            align-items: center;      
+            width: 100%;             
+            max-width: 250px;        
+        }
+        /* Responsividade */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .logo {
+                justify-content: center;
+            }
+
+            .price-range {
+                justify-content: center;
+            }
+
+            .filter-section {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .filter-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .basic-filters, .advanced-filters {
+                grid-template-columns: 1fr;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
+
+            .tutorial-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-video-container {
+                width: 95%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .product-image {
+                height: 150px;
+            }
+
+            .product-info {
+                padding: 0.8rem;
+            }
+
+            .product-name {
+                font-size: 0.9rem;
+            }
+
+            .product-price {
+                font-size: 1.1rem;
+            }
+
+            .rating-stars i {
+                font-size: 0.8rem;
+            }
+
+            .rating-value {
+                font-size: 0.8rem;
+            }
+
+            .footer-content {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Página Principal -->
+    <div id="home-page">
+        <header>
+            <div class="logo" onclick="refreshPage()">
+                <i class="fas fa-star"></i> ValueTwin
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="O que você está procurando hoje?">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            <div class="price-range">
+                <input type="number" placeholder="Mín">
+                <span>-</span>
+                <input type="number" placeholder="Máx">
+            </div>
+            <button class="tutorial-btn" id="tutorial-btn">
+                <i class="fas fa-question-circle"></i> Como funciona?
+            </button>
+        </header>
+
+        <div class="filter-section">
+            <button class="filter-btn" id="basic-filter-btn">
+                Filtros Básicos <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="filter-panel" id="basic-filter-panel">
+                <div class="basic-filters">
+                    <div class="filter-group">
+                        <h3>Marca</h3>
+                        <div class="filter-options">
+                            <div class="filter-option">Samsung</div>
+                            <div class="filter-option">LG</div>
+                            <div class="filter-option">Apple</div>
+                            <div class="filter-option">Xiaomi</div>
+                            <div class="filter-option">Sony</div>
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <h3>Categoria</h3>
+                        <div class="filter-options">
+                            <div class="filter-option">Eletrônicos</div>
+                            <div class="filter-option">Eletrodomésticos</div>
+                            <div class="filter-option">Informática</div>
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <h3>Preço</h3>
+                        <div class="slider-container">
+                            <input type="range" min="0" max="10000" value="5000">
+                        </div>
+                    </div>
+                </div>
+                <button class="apply-filters">Aplicar Filtros</button>
+            </div>
+
+            <button class="filter-btn" id="advanced-filter-btn">
+                Filtros Avançados <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="filter-panel" id="advanced-filter-panel">
+                <div class="advanced-filters">
+                    <div class="filter-group">
+                        <h3>Origem</h3>
+                        <div class="filter-options">
+                            <div class="filter-option">Nacional</div>
+                            <div class="filter-option">Internacional</div>
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <h3>Avaliação de Comentários</h3>
+                        <div class="slider-container">
+                            <input type="range" min="0" max="5" step="0.1" value="3">
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <h3>Qualidade Técnica</h3>
+                        <div class="slider-container">
+                            <input type="range" min="0" max="5" step="0.1" value="3">
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <h3>Categoria</h3>
+                        <div class="filter-options">
+                            <div class="filter-option">Eletrônicos</div>
+                            <div class="filter-option">Eletrodomésticos</div>
+                            <div class="filter-option">Informática</div>
+                            <div class="filter-option">Celulares</div>
+                            <div class="filter-option">TVs</div>
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <h3>Pesquisa por Imagem</h3>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="filter-group">
+                        <h3>Tempo de Entrega</h3>
+                        <div class="filter-options">
+                            <div class="filter-option">Até 3 dias</div>
+                            <div class="filter-option">Até 7 dias</div>
+                            <div class="filter-option">Até 15 dias</div>
+                        </div>
+                    </div>
+                </div>
+                <button class="apply-filters">Aplicar Filtros</button>
+            </div>
+        </div>
+
+        <div class="promo-carousel">
+            <div class="promo-slide" id="promo-slide">
+                <div class="promo-item">
+                    <img src="https://via.placeholder.com/800x300/47455A/E8E6FF?text=Promoção+de+Eletrônicos" alt="Promoção">
+                </div>
+                <div class="promo-item">
+                    <img src="https://via.placeholder.com/800x300/47455A/E8E6FF?text=Ofertas+Especiais" alt="Ofertas">
+                </div>
+                <div class="promo-item">
+                    <img src="https://via.placeholder.com/800x300/47455A/E8E6FF?text=Frete+Grátis" alt="Frete Grátis">
+                </div>
+            </div>
+            <div class="carousel-nav">
+                <button id="prev-promo"><i class="fas fa-chevron-left"></i></button>
+                <button id="next-promo"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+
+        <div class="partner-section">
+            <h2 class="section-title">Lojas Parceiras</h2>
+            <div class="partners-container">
+                <button class="slider-control slider-prev"><i class="fas fa-chevron-left"></i></button>
+                <div class="partners-slider" id="partners-slider">
+                    <div class="partner-card">
+                        <div class="partner-logo">
+                            <img src="https://via.placeholder.com/50/382D34/F1E1EB?text=LP1" alt="Loja 1">
+                        </div>
+                        <div class="partner-name" data-fullname="Loja Parceira 1">Loja Parceira 1</div>
+                    </div>
+                    <div class="partner-card">
+                        <div class="partner-logo">
+                            <img src="https://via.placeholder.com/50/382D34/F1E1EB?text=LP2" alt="Loja 2">
+                        </div>
+                        <div class="partner-name" data-fullname="Loja Parceira 2">Loja Parceira 2</div>
+                    </div>
+                    <div class="partner-card">
+                        <div class="partner-logo">
+                            <img src="https://via.placeholder.com/50/382D34/F1E1EB?text=LP3" alt="Loja 3">
+                        </div>
+                        <div class="partner-name" data-fullname="Loja Parceira 3">Loja Parceira 3</div>
+                    </div>
+                    <div class="partner-card">
+                        <div class="partner-logo">
+                            <img src="https://via.placeholder.com/50/382D34/F1E1EB?text=LP4" alt="Loja 4">
+                        </div>
+                        <div class="partner-name" data-fullname="Loja Parceira 4">Loja Parceira 4</div>
+                    </div>
+                    <div class="partner-card">
+                        <div class="partner-logo">
+                            <img src="https://via.placeholder.com/50/382D34/F1E1EB?text=LP5" alt="Loja 5">
+                        </div>
+                        <div class="partner-name" data-fullname="Loja Parceira 5">Loja Parceira 5</div>
+                    </div>
+                    <div class="partner-card">
+                        <div class="partner-logo">
+                            <img src="https://via.placeholder.com/50/382D34/F1E1EB?text=LP6" alt="Loja 6">
+                        </div>
+                        <div class="partner-name" data-fullname="Loja Parceira 6">Loja Parceira 6</div>
+                    </div>
+                </div>
+                <button class="slider-control slider-next"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+
+        <div class="featured-products">
+            <h2 class="section-title">Produtos mais vendidos</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://via.placeholder.com/200/FFFFFF/47455A?text=Ventilador" alt="Ventilador">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name" data-fullname="Ventilador de Mesa 30cm 6 Pás - Turbo Power">Ventilador de Mesa 30cm 6 Pás - Turbo Power</div>
+                        <div class="product-price">R$ 129,90</div>
+                        <div class="product-ratings">
+                            <div class="rating-item">
+                                <div class="rating-stars stars-green">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <div class="rating-value">4.2</div>
+                            </div>
+                            <div class="rating-item">
+                                <div class="rating-stars stars-yellow">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <div class="rating-value">3.7</div>
+                            </div>
+                            <div class="rating-item">
+                                <div class="rating-stars stars-blue">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <div class="rating-value">4.0</div>
+                            </div>
+                            <div class="rating-item">
+                                <div class="rating-stars stars-pink">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <div class="rating-value">4.1</div>
+                            </div>
+                        </div>
+                        <div class="product-footer">
+                            <div class="delivery-time">Entrega em 3 dias</div>
+                            <div class="store-info">
+                                <div class="store-logo">
+                                    <img src="https://via.placeholder.com/20/382D34/F1E1EB?text=L1" alt="Loja">
+                                </div>
+                                <div class="store-name" data-fullname="EletroShop Online">EletroShop</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://via.placeholder.com/200/FFFFFF/47455A?text=Smartphone" alt="Smartphone">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name" data-fullname="Smartphone XPower Pro 128GB 6.5'' Câmera Tripla 48MP">Smartphone XPower Pro 128GB 6.5'' Câmera Tripla 48MP</div>
+                        <div class="product-price">R$ 1.599,90</div>
+                        <div class="product-ratings">
+                            <div class="rating-item">
+                                <div class="rating-stars stars-green">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <div class="rating-value">3.1</div>
+                            </div>
+                            <div class="rating-item">
+                                <div class="rating-stars stars-yellow">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <div class="rating-value">4.0</div>
+                            </div>
+                            <div class="rating-item">
+                                <div class="rating-stars stars-blue">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <div class="rating-value">4.5</div>
+                            </div>
+                            <div class="rating-item">
+                                <div class="rating-stars stars-pink">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <div class="rating-value">4.2</div>
+                            </div>
+                        </div>
+                        <div class="product-footer">
+                            <div class="delivery-time">Entrega em 7 dias</div>
+                            <div class="store-info">
+                                <div class="store-logo">
+                                    <img src="https://via.placeholder.com/20/382D34/F1E1EB?text=L2" alt="Loja">
+                                </div>
+                                <div class="store-name" data-fullname="Tech Importados">Tech Import</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://via.placeholder.com/200/FFFFFF/47455A?text=Fones" alt="Fones de Ouvido">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name" data-fullname="Fones de Ouvido Sem Fio Bluetooth 5.0 - Cancelamento de Ruído">Fones de Ouvido Sem Fio Bluetooth 5.0 - Cancelamento de Ruído</div>
+                        <div class="product-price">R$ 249,90</div>
+                        <div class="product-ratings">
+                            <div class="rating-item">
+                                <div class="rating-stars stars-green">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <div class="rating-value">5.0</div>
+                            </div>
+                            <div class="rating-item">
+                                <div class="rating-stars stars-yellow">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <div class="rating-value">4.7</div>
+                            </div>
+                            <div class="rating-item">
+                                <div class="rating-stars stars-blue">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <div class="rating-value">4.0</div>
+                            </div>
+                            <div class="rating-item">
+                                <div class="rating-stars stars-pink">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <div class="rating-value">5.0</div>
+                            </div>
+                        </div>
+                        <div class="product-footer">
+                            <div class="delivery-time">Entrega em 2 dias</div>
+                            <div class="store-info">
+                                <div class="store-logo">
+                                    <img src="https://via.placeholder.com/20/382D34/F1E1EB?text=L3" alt="Loja">
+                                </div>
+                                <div class="store-name" data-fullname="AudioTech Brasil">AudioTech</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Página Pós-Pesquisa -->
+    <div id="search-page" style="display: none;">
+        <header>
+            <div class="logo">
+                <i class="fas fa-star"></i> ValueTwin
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="O que você está procurando hoje?" value="ventilador">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            <div class="price-range">
+                <input type="number" placeholder="Mín">
+                <span>-</span>
+                <input type="number" placeholder="Máx">
+            </div>
+        </header>
+
+        <div class="filter-section">
+            <button class="filter-btn" id="basic-filter-btn-search">
+                Filtros Básicos <i class="fas fa-chevron-down"></i>
+            </button>
+            <button class="filter-btn" id="advanced-filter-btn-search">
+                Filtros Avançados <i class="fas fa-chevron-down"></i>
+            </button>
+        </div>
+
+        <div class="sort-options">
+            <button class="sort-btn active">Relevância</button>
+            <button class="sort-btn">Preço</button>
+            <button class="sort-btn">Média de Avaliação</button>
+            <button class="sort-btn">Próximo de Você</button>
+        </div>
+
+        <div class="featured-products">
+            <div class="products-grid">
+                <!-- Os mesmos cards de produtos da página principal -->
+                <!-- Adicionados mais alguns para demonstração -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://via.placeholder.com/200/FFFFFF/47455A?text=Ventilador+Tower" alt="Ventilador Tower">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name" data-fullname="Ventilador Tower 40cm 3 Velocidades - Super Silencioso">Ventilador Tower 40cm 3 Velocidades - Super Silencioso</div>
+                        <div class="product-price">R$ 199,90</div>
+                        <div class="product-ratings">
+                            <div class="rating-item">
+                                <div class="rating-stars stars-green">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <div class="rating-value">4.0</div>
+                            </div>
+                            <div class="rating-item">
+                                <div class="rating-stars stars-yellow">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <div class="rating-value">4.5</div>
+                            </div>
+                            <div class="rating-item">
+                                <div class="rating-stars stars-blue">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <div class="rating-value">5.0</div>
+                            </div>
+                            <div class="rating-item">
+                                <div class="rating-stars stars-pink">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <div class="rating-value">4.7</div>
+                            </div>
+                        </div>
+                        <div class="product-footer">
+                            <div class="delivery-time">Entrega em 5 dias</div>
+                            <div class="store-info">
+                                <div class="store-logo">
+                                    <img src="https://via.placeholder.com/20/382D34/F1E1EB?text=L4" alt="Loja">
+                                </div>
+                                <div class="store-name" data-fullname="Casa e Eletro">CasaEletro</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://via.placeholder.com/200/FFFFFF/47455A?text=Ventilador+USB" alt="Ventilador USB">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name" data-fullname="Ventilador USB Portátil com Bateria Recarregável - 3 Velocidades">Ventilador USB Portátil com Bateria Recarregável - 3 Velocidades</div>
+                        <div class="product-price">R$ 59,90</div>
+                        <div class="product-ratings">
+                            <div class="rating-item">
+                                <div class="rating-stars stars-green">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <div class="rating-value">5.0</div>
+                            </div>
+                            <div class="rating-item">
+                                <div class="rating-stars stars-yellow">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <div class="rating-value">3.0</div>
+                            </div>
+                            <div class="rating-item">
+                                <div class="rating-stars stars-blue">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <div class="rating-value">4.0</div>
+                            </div>
+                            <div class="rating-item">
+                                <div class="rating-stars stars-pink">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <div class="rating-value">4.0</div>
+                            </div>
+                        </div>
+                        <div class="product-footer">
+                            <div class="delivery-time">Entrega em 1 dia</div>
+                            <div class="store-info">
+                                <div class="store-logo">
+                                    <img src="https://via.placeholder.com/20/382D34/F1E1EB?text=L5" alt="Loja">
+                                </div>
+                                <div class="store-name" data-fullname="TechGadgets Express">TechGadgets</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Página de Tutorial -->
+    <div id="tutorial-page" style="display: none;">
+        <header>
+            <div class="logo">
+                <i class="fas fa-star"></i> ValueTwin
+            </div>
+        </header>
+        <div class="tutorial-page">
+            <h2 class="section-title">Como usar o ValueTwin</h2>
+            <div class="tutorial-grid">
+                <div class="tutorial-item" data-video="tutorial1">
+                    <div class="tutorial-thumbnail">
+                        <video muted loop>
+                            <source src="https://samplelib.com/lib/preview/mp4/sample-5s.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="tutorial-title">O que significam as estrelas coloridas?</div>
+                </div>
+                <div class="tutorial-item" data-video="tutorial2">
+                    <div class="tutorial-thumbnail">
+                        <video muted loop>
+                            <source src="https://samplelib.com/lib/preview/mp4/sample-5s.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="tutorial-title">Como detectamos comentários falsos?</div>
+                </div>
+                <div class="tutorial-item" data-video="tutorial3">
+                    <div class="tutorial-thumbnail">
+                        <video muted loop>
+                            <source src="https://samplelib.com/lib/preview/mp4/sample-5s.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="tutorial-title">Análise técnica de produtos</div>
+                </div>
+                <div class="tutorial-item" data-video="tutorial4">
+                    <div class="tutorial-thumbnail">
+                        <video muted loop>
+                            <source src="https://samplelib.com/lib/preview/mp4/sample-5s.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="tutorial-title">Entendendo o índice de confiabilidade</div>
+                </div>
+                <div class="tutorial-item" data-video="tutorial5">
+                    <div class="tutorial-thumbnail">
+                        <video muted loop>
+                            <source src="https://samplelib.com/lib/preview/mp4/sample-5s.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="tutorial-title">Como usar os filtros de busca</div>
+                </div>
+                <div class="tutorial-item" data-video="tutorial6">
+                    <div class="tutorial-thumbnail">
+                        <video muted loop>
+                            <source src="https://samplelib.com/lib/preview/mp4/sample-5s.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="tutorial-title">Comparando produtos</div>
+                </div>
+                <div class="tutorial-item" data-video="tutorial7">
+                    <div class="tutorial-thumbnail">
+                        <video muted loop>
+                            <source src="https://samplelib.com/lib/preview/mp4/sample-5s.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="tutorial-title">Configurando alertas de preço</div>
+                </div>
+                <div class="tutorial-item" data-video="tutorial8">
+                    <div class="tutorial-thumbnail">
+                        <video muted loop>
+                            <source src="https://samplelib.com/lib/preview/mp4/sample-5s.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="tutorial-title">Salvando produtos favoritos</div>
+                </div>
+                <div class="tutorial-item" data-video="tutorial9">
+                    <div class="tutorial-thumbnail">
+                        <video muted loop>
+                            <source src="https://samplelib.com/lib/preview/mp4/sample-5s.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="tutorial-title">Pesquisando por imagem</div>
+                </div>
+            </div>
+        </div>
+        <div class="close" onclick="backaward()">X</div>
+        <div class="video-modal" id="video-modal">
+            <div class="modal-video-container">
+                <button class="close-modal" id="close-modal"><i class="fas fa-times"></i></button>
+                <video class="modal-video" controls id="modal-video">
+                    <source src="https://samplelib.com/lib/preview/mp4/sample-5s.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="video-transcript" id="video-transcript">
+                <!-- Conteúdo será preenchido via JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="contact-info">
+                <h3>Contato</h3>
+                <p><i class="fas fa-envelope"></i> contato@valuetwin.com.br</p>
+                <p><i class="fas fa-phone"></i> (11) 1234-5678</p>
+                <p><i class="fas fa-map-marker-alt"></i> Av. Paulista, 1000 - São Paulo/SP</p>
+            </div>
+            <div class="footer-actions">
+                <div class="help-container">
+                    <button class="help-btn" id="help-btn">Precisa de ajuda? <i class="fas fa-chevron-down"></i></button>
+                    <div class="help-options" id="help-options">
+                        <div class="help-option">Assistente Virtual</div>
+                        <div class="help-option">Falar Conosco</div>
+                    </div>
+                </div>
+                <button class="partner-btn">Seja um Parceiro</button>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2023 ValueTwin - CNPJ 12.345.678/0001-99 - Todos os direitos reservados</p>
+        </div>
+    </footer>
+
+    <script>
+        // Filtros
+        document.getElementById('basic-filter-btn').addEventListener('click', function() {
+            this.classList.toggle('active');
+            document.getElementById('basic-filter-panel').classList.toggle('active');
+            document.getElementById('advanced-filter-panel').classList.remove('active');
+            document.getElementById('advanced-filter-btn').classList.remove('active');
+        });
+
+        document.getElementById('advanced-filter-btn').addEventListener('click', function() {
+            this.classList.toggle('active');
+            document.getElementById('advanced-filter-panel').classList.toggle('active');
+            document.getElementById('basic-filter-panel').classList.remove('active');
+            document.getElementById('basic-filter-btn').classList.remove('active');
+        });
+
+        // Filtros na página de pesquisa
+        document.getElementById('basic-filter-btn-search')?.addEventListener('click', function() {
+            alert('Abrir filtros básicos na página de pesquisa');
+        });
+
+        document.getElementById('advanced-filter-btn-search')?.addEventListener('click', function() {
+            alert('Abrir filtros avançados na página de pesquisa');
+        });
+
+        // Opções de filtro
+        document.querySelectorAll('.filter-option').forEach(option => {
+            option.addEventListener('click', function() {
+                this.classList.toggle('selected');
+            });
+        });
+
+        // Carrossel de promoções
+        let currentPromoSlide = 0;
+        const promoSlides = document.querySelectorAll('.promo-item');
+        const promoSlider = document.getElementById('promo-slide');
+
+        function updatePromoSlider() {
+            promoSlider.style.transform = `translateX(-${currentPromoSlide * 100}%)`;
+        }
+
+        document.getElementById('next-promo')?.addEventListener('click', function() {
+            currentPromoSlide = (currentPromoSlide + 1) % promoSlides.length;
+            updatePromoSlider();
+        });
+
+        document.getElementById('prev-promo')?.addEventListener('click', function() {
+            currentPromoSlide = (currentPromoSlide - 1 + promoSlides.length) % promoSlides.length;
+            updatePromoSlider();
+        });
+
+        // Auto-rotate promo carousel
+        setInterval(() => {
+            currentPromoSlide = (currentPromoSlide + 1) % promoSlides.length;
+            updatePromoSlider();
+        }, 5000);
+
+        // Carrossel de lojas parceiras
+        let currentPartnerSlide = 0;
+        const partnerCards = document.querySelectorAll('.partner-card');
+        const partnerSlider = document.getElementById('partners-slider');
+        const cardsPerSlide = 4;
+
+        function updatePartnerSlider() {
+            const cardWidth = partnerCards[0].offsetWidth + 32; // width + gap
+            const translateX = -currentPartnerSlide * cardWidth * cardsPerSlide;
+            partnerSlider.style.transform = `translateX(${translateX}px)`;
+        }
+
+        document.querySelector('.slider-prev')?.addEventListener('click', function() {
+            if (currentPartnerSlide > 0) {
+                currentPartnerSlide--;
+                updatePartnerSlider();
+            }
+        });
+
+        document.querySelector('.slider-next')?.addEventListener('click', function() {
+            if (currentPartnerSlide < Math.ceil(partnerCards.length / cardsPerSlide) - 1) {
+                currentPartnerSlide++;
+                updatePartnerSlider();
+            }
+        });
+
+        // Ajustar slider na mudança de tamanho da tela
+        window.addEventListener('resize', updatePartnerSlider);
+
+        // Tutorial videos
+        const tutorialItems = document.querySelectorAll('.tutorial-item');
+        const videoModal = document.getElementById('video-modal');
+        const modalVideo = document.getElementById('modal-video');
+        const videoTranscript = document.getElementById('video-transcript');
+        const closeModal = document.getElementById('close-modal');
+
+        // Transcripts para cada vídeo (simulado)
+        const videoTranscripts = {
+            tutorial1: "As estrelas coloridas representam diferentes métricas de avaliação. A estrela verde indica a relação preço/benefício, a amarela mostra a qualidade segundo comentários humanos e a azul representa a qualidade técnica com base na ficha técnica do produto.",
+            tutorial2: "Nosso sistema utiliza inteligência artificial para detectar padrões em comentários que podem indicar avaliações falsas ou de bots. Analisamos linguagem, repetição de frases, histórico do avaliador e outros fatores para garantir que apenas comentários genuínos sejam considerados.",
+            tutorial3: "A análise técnica é feita comparando as especificações do produto com padrões de mercado para sua categoria. Avaliamos fatores como desempenho, durabilidade, eficiência energética e recursos extras para determinar a pontuação técnica.",
+            tutorial4: "O índice de confiabilidade leva em conta a reputação da marca, histórico de avaliações dos produtos, tempo no mercado e presença online. Quanto maior a pontuação, mais confiável consideramos o produto e a loja.",
+            tutorial5: "Use os filtros para refinar sua busca por preço, avaliação, características técnicas e outros critérios. Você pode alternar entre filtros básicos e avançados conforme sua necessidade.",
+            tutorial6: "Selecione até 3 produtos para comparar lado a lado. O sistema destacará as diferenças em preço, avaliações e características técnicas para ajudar você a tomar a melhor decisão.",
+            tutorial7: "Configure alertas para ser notificado quando um produto que você está interessado atingir uma determinada faixa de preço ou quando um produto com melhor avaliação for encontrado.",
+            tutorial8: "Salve produtos na sua lista de favoritos para acompanhar seus itens preferidos e receber atualizações sobre eles. Você pode acessar sua lista a qualquer momento.",
+            tutorial9: "Faça upload de uma imagem de um produto que deseja encontrar. Nosso sistema buscará itens similares com base na imagem, ajudando você a encontrar exatamente o que precisa."
+        };
+
+        tutorialItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const videoId = this.getAttribute('data-video');
+                const videoSrc = this.querySelector('video').getAttribute('src');
+                
+                modalVideo.setAttribute('src', videoSrc);
+                videoTranscript.innerHTML = `<h3>${this.querySelector('.tutorial-title').textContent}</h3><p>${videoTranscripts[videoId]}</p>`;
+                
+                videoModal.classList.add('active');
+                modalVideo.play();
+            });
+        });
+
+        closeModal.addEventListener('click', function() {
+            videoModal.classList.remove('active');
+            modalVideo.pause();
+            modalVideo.currentTime = 0;
+        });
+
+        // Botão de ajuda no footer
+        const helpBtn = document.getElementById('help-btn');
+        const helpOptions = document.getElementById('help-options');
+
+        helpBtn?.addEventListener('click', function() {
+            helpOptions.classList.toggle('active');
+        });
+
+        // Fechar opções de ajuda ao clicar fora
+        document.addEventListener('click', function(e) {
+            if (!helpBtn?.contains(e.target) && !helpOptions?.contains(e.target)) {
+                helpOptions?.classList.remove('active');
+            }
+        });
+
+        // Navegação entre páginas (simulada)
+        function showPage(pageId) {
+            document.getElementById('home-page').style.display = 'none';
+            document.getElementById('search-page').style.display = 'none';
+            document.getElementById('tutorial-page').style.display = 'none';
+            
+            document.getElementById(pageId).style.display = 'block';
+        }
+
+        // Simular busca (para demonstração)
+        document.querySelector('.search-bar button').addEventListener('click', function() {
+            const searchTerm = document.querySelector('.search-bar input').value.trim();
+            if (searchTerm.toLowerCase() === 'tutorial') {
+                showPage('tutorial-page');
+            } else if (searchTerm) {
+                showPage('search-page');
+            }
+        });
+
+        // Permitir busca com Enter
+        document.querySelector('.search-bar input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('.search-bar button').click();
+            }
+        });
+
+        // Tooltips para nomes de produtos e lojas
+        document.querySelectorAll('.product-name').forEach(name => {
+            name.addEventListener('mouseenter', function() {
+                // Tooltip é exibido via CSS
+            });
+        });
+
+        document.querySelectorAll('.store-name').forEach(store => {
+            store.addEventListener('mouseenter', function() {
+                // Tooltip é exibido via CSS
+            });
+        });
+
+        // Ordenação
+        document.querySelectorAll('.sort-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                // Aqui iria a lógica de ordenação real
+            });
+        });
+        // Botão do Tutorial
+        document.getElementById('tutorial-btn').addEventListener('click', function() {
+            showPage('tutorial-page');
+        });
+        function refreshPage() {
+            location.reload(true);
+        }
+    </script>
+</body>
+</html>
