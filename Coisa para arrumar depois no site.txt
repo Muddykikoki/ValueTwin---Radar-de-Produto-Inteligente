@@ -1,11 +1,16 @@
-Coisa para arrumar depois no site:
-Clique no logo tem que voltar para a pagina inicial
-tamanho botão seja parceiro
-alinhar a seta para baixo do precisa de ajuda para o fim do botão
-parte do como usar fazer com que os vídeos fechem 
-fazer o vídeo se adaptar á tela
-caixa da transcrição do vídeo grudada no vim da tela 
-fazer um sistema básico para os cads serem gerados automaticamente
-e fazer com que a ordenação [Relevancia,Preço,Nedia de avaliação, Próximo de voce] funcione
-fazer que a parte do precisa de ajuda funcione
-filtros funcione na parte de busca
+                                              Coisa para arrumar depois no site
+Principal:
+  ✓ Clique no logo tem que voltar para a pagina inicial
+  fazer que a parte do "precisa de ajuda" funcione
+  ✓ tamanho botão seja igual
+  alinhar a seta para baixo do precisa de ajuda para o fim do botão
+  corigir parte do help-opitions que não está aparecendo
+como usar:
+  fazer com que os vídeos fechem 
+  fazer o vídeo se adaptar á tela
+  fazer com que a caixa da transcrição do vídeo não fique grudada no fim da tela 
+  coloque setas para ir pro proximo video ou pro anterior
+pos busca: 
+  fazer um sistema básico para os cads serem gerados automaticamente de forma aleatoria pode ser usando uma api ou pegando os dados de um panilha e algum jeito da imagem fazer sentido com o que for posto
+  fazer com que a ordenação [Relevancia,Preço,Nedia de avaliação, Próximo de voce] funcione
+  filtros funcione na parte de busca
