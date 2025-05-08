@@ -1204,39 +1204,39 @@
                 <div class="partners-slider" id="partners-slider">
                     <div class="partner-card">
                         <div class="partner-logo">
-                            <img src="https://via.placeholder.com/50/382D34/F1E1EB?text=LP1" alt="Loja 1">
+                            <img src="loja/templetLP1.png" alt="Loja 1">
                         </div>
-                        <div class="partner-name" data-fullname="Loja Parceira 1">Loja Parceira 1</div>
+                        <div class="partner-name" data-fullname="InfoW">InfoW</div>
                     </div>
                     <div class="partner-card">
                         <div class="partner-logo">
-                            <img src="https://via.placeholder.com/50/382D34/F1E1EB?text=LP2" alt="Loja 2">
+                            <img src="loja/templetLP2.png" alt="Loja 2">
                         </div>
-                        <div class="partner-name" data-fullname="Loja Parceira 2">Loja Parceira 2</div>
+                        <div class="partner-name" data-fullname="Eletro">Eletro</div>
                     </div>
                     <div class="partner-card">
                         <div class="partner-logo">
-                            <img src="https://via.placeholder.com/50/382D34/F1E1EB?text=LP3" alt="Loja 3">
+                            <img src="loja/templetLP3.png" alt="Loja 3">
                         </div>
-                        <div class="partner-name" data-fullname="Loja Parceira 3">Loja Parceira 3</div>
+                        <div class="partner-name" data-fullname="AudPrime">AudPrime</div>
                     </div>
                     <div class="partner-card">
                         <div class="partner-logo">
-                            <img src="https://via.placeholder.com/50/382D34/F1E1EB?text=LP4" alt="Loja 4">
+                            <img src="loja/templetLP4.png" alt="Loja 4">
                         </div>
-                        <div class="partner-name" data-fullname="Loja Parceira 4">Loja Parceira 4</div>
+                        <div class="partner-name" data-fullname="ConectG">ConectG</div>
                     </div>
                     <div class="partner-card">
                         <div class="partner-logo">
-                            <img src="https://via.placeholder.com/50/382D34/F1E1EB?text=LP5" alt="Loja 5">
+                            <img src="loja/templetLP5.png" alt="Loja 5">
                         </div>
-                        <div class="partner-name" data-fullname="Loja Parceira 5">Loja Parceira 5</div>
+                        <div class="partner-name" data-fullname="ConectG">ConectG</div>
                     </div>
                     <div class="partner-card">
                         <div class="partner-logo">
-                            <img src="https://via.placeholder.com/50/382D34/F1E1EB?text=LP6" alt="Loja 6">
+                            <img src="loja/templetLP6.png" alt="Loja 6">
                         </div>
-                        <div class="partner-name" data-fullname="Loja Parceira 6">Loja Parceira 6</div>
+                        <div class="partner-name" data-fullname="MDigital">MDigital</div>
                     </div>
                 </div>
                 <button class="slider-control slider-next"><i class="fas fa-chevron-right"></i></button>
@@ -1865,9 +1865,16 @@ function generateStars(rating) {
     const closeModal = document.getElementById('close-modal');
 
     const videoTranscripts = {
-        tutorial1: "As estrelas coloridas representam diferentes métricas de avaliação...",
-        // ... (mantenha os outros transcripts)
-    };
+            tutorial1: "As estrelas coloridas representam diferentes métricas de avaliação. A estrela verde indica a relação preço/benefício, a amarela mostra a qualidade segundo comentários humanos e a azul representa a qualidade técnica com base na ficha técnica do produto.",
+            tutorial2: "Nosso sistema utiliza inteligência artificial para detectar padrões em comentários que podem indicar avaliações falsas ou de bots. Analisamos linguagem, repetição de frases, histórico do avaliador e outros fatores para garantir que apenas comentários genuínos sejam considerados.",
+            tutorial3: "A análise técnica é feita comparando as especificações do produto com padrões de mercado para sua categoria. Avaliamos fatores como desempenho, durabilidade, eficiência energética e recursos extras para determinar a pontuação técnica.",
+            tutorial4: "O índice de confiabilidade leva em conta a reputação da marca, histórico de avaliações dos produtos, tempo no mercado e presença online. Quanto maior a pontuação, mais confiável consideramos o produto e a loja.",
+            tutorial5: "Use os filtros para refinar sua busca por preço, avaliação, características técnicas e outros critérios. Você pode alternar entre filtros básicos e avançados conforme sua necessidade.",
+            tutorial6: "Selecione até 3 produtos para comparar lado a lado. O sistema destacará as diferenças em preço, avaliações e características técnicas para ajudar você a tomar a melhor decisão.",
+            tutorial7: "Configure alertas para ser notificado quando um produto que você está interessado atingir uma determinada faixa de preço ou quando um produto com melhor avaliação for encontrado.",
+            tutorial8: "Salve produtos na sua lista de favoritos para acompanhar seus itens preferidos e receber atualizações sobre eles. Você pode acessar sua lista a qualquer momento.",
+            tutorial9: "Faça upload de uma imagem de um produto que deseja encontrar. Nosso sistema buscará itens similares com base na imagem, ajudando você a encontrar exatamente o que precisa."
+        };
 
     tutorialItems.forEach(item => {
         item.addEventListener('click', function() {
@@ -2169,6 +2176,7 @@ function getSmartProductImage(product) {
     function refreshPage() {
         location.reload(true);
     }
+
 
     // Inicializa o sistema
     fetchProducts();
