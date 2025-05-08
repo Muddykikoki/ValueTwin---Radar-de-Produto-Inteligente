@@ -463,6 +463,35 @@
         .slider-next {
             right: 0;
         }
+        .product-card .product-image {
+            width: 100%;
+            height: 200px; 
+            border-radius: 16px 16px 0 0; 
+            overflow: hidden;
+            background-color: var(--preto-rocha); 
+            border: 2px solid var(--lavanda-pastel); 
+        }
+
+        .product-card .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center; 
+            transition: transform 0.3s ease; 
+        }
+
+        /* Efeito hover para melhor interação*/
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        /* Para as imagens redondas (como nos partners) */
+        .partner-logo img {
+            width: 100% !important; 
+            height: 100% !important;
+            object-fit: cover;
+            border-radius: 50%;
+        }
 
         /* Produtos em Destaque */
         .featured-products {
@@ -1981,7 +2010,6 @@ function displayProducts(products, targetGrid = productsGrid) {
         targetGrid.appendChild(card);
     });
     
-    setupTooltips(); // Mantenha esta linha se já existir no seu código
 }
 
 // FUNÇÃO AUXILIAR QUE DEVE SER ADICIONADA (coloque fora da displayProducts)
