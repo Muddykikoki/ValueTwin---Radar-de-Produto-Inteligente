@@ -1033,8 +1033,14 @@
             transition: background-color 0.3s;
         }
 
-.load-more-btn:hover {
-    background-color: var(--lavanda-pastel);
+        .load-more-btn:hover {
+            background-color: var(--lavanda-pastel);
+        .product-image img {
+        object-fit: cover;
+        width: 100%;
+        height: 200px;
+        border-radius: 8px 8px 0 0;
+}
 }
     </style>
 </head>
@@ -1693,8 +1699,29 @@
     loadMoreBtn.className = 'load-more-btn';
     loadMoreBtn.textContent = 'Ver Mais';
 
-    // ========== FUNÇÕES EXISTENTES (MANTIDAS) ========== //
+    // ========== FUNÇÕES EXISTENTES A SEREM MANTIDAS ========== //
+    function calculateAverageRating(ratings) {
+    const values = Object.values(ratings);
+    const sum = values.reduce((acc, curr) => acc + curr, 0);
+    return sum / values.length;
+}
+
+function generateStars(rating) {
+    const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 >= 0.5;
+    let stars = '';
     
+    for (let i = 0; i < 5; i++) {
+        if (i < fullStars) {
+            stars += '<i class="fas fa-star"></i>';
+        } else if (i === fullStars && hasHalfStar) {
+            stars += '<i class="fas fa-star-half-alt"></i>';
+        } else {
+            stars += '<i class="far fa-star"></i>';
+        }
+    }
+    return stars;
+}
     // Filtros Básicos e Avançados (mantido igual)
     document.getElementById('basic-filter-btn').addEventListener('click', function() {
         this.classList.toggle('active');
@@ -1896,66 +1923,84 @@
     }
 
     // Exibe produtos no grid (modificada para aceitar grid específico)
-    function displayProducts(products, targetGrid = productsGrid) {
-        targetGrid.innerHTML = ''; // Limpa o grid antes de adicionar
+    // FUNÇÃO PRONTA PARA COPIAR E COLAR (substitua apenas a displayProducts existente)
+function displayProducts(products, targetGrid = productsGrid) {
+    targetGrid.innerHTML = ''; // Limpa o grid
+    
+    products.forEach(product => {
+        const averageRating = calculateAverageRating(product.ratings);
+        const imageUrl = product.image || getSmartProductImage(product);
         
-        products.forEach(product => {
-            const averageRating = calculateAverageRating(product.ratings);
-            
-            // Usa imagem do produto se existir, senão busca uma genérica
-            const imageUrl = product.image || `https://source.unsplash.com/200x200/?${product.category || 'product'},${product.keywords?.join(',') || ''}`;
-            
-            const card = document.createElement('div');
-            card.className = 'product-card';
-            card.innerHTML = `
-                <div class="product-image">
-                    <img src="${imageUrl}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/200/FFFFFF/47455A?text=Produto'">
-                </div>
-                <div class="product-info">
-                    <div class="product-name" data-fullname="${product.name}${product.description ? ' - ' + product.description : ''}">${product.name}</div>
-                    <div class="product-price">R$ ${product.price.toFixed(2).replace('.', ',')}</div>
-                    <div class="product-ratings">
-                        <div class="rating-item">
-                            <div class="rating-stars stars-green">
-                                ${generateStars(averageRating)}
-                            </div>
-                            <div class="rating-value">${averageRating.toFixed(1)}</div>
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.innerHTML = `
+            <div class="product-image">
+                <img src="${imageUrl}" alt="${product.name}" 
+                     onerror="this.onerror=null;this.src='https://via.placeholder.com/200/382D34/F1E1EB?text=${product.name.substring(0,15).replace(/\s+/g, '+')}'">
+            </div>
+            <div class="product-info">
+                <div class="product-name" data-fullname="${product.name}${product.description ? ' - ' + product.description : ''}">${product.name}</div>
+                <div class="product-price">R$ ${product.price.toFixed(2).replace('.', ',')}</div>
+                <div class="product-ratings">
+                    <div class="rating-item">
+                        <div class="rating-stars stars-green">
+                            ${generateStars(averageRating)}
                         </div>
-                        <div class="rating-item">
-                            <div class="rating-stars stars-yellow">
-                                ${generateStars(product.ratings.comments)}
-                            </div>
-                            <div class="rating-value">${product.ratings.comments.toFixed(1)}</div>
-                        </div>
-                        <div class="rating-item">
-                            <div class="rating-stars stars-blue">
-                                ${generateStars(product.ratings.technical)}
-                            </div>
-                            <div class="rating-value">${product.ratings.technical.toFixed(1)}</div>
-                        </div>
-                        <div class="rating-item">
-                            <div class="rating-stars stars-pink">
-                                ${generateStars(product.ratings.reliability)}
-                            </div>
-                            <div class="rating-value">${product.ratings.reliability.toFixed(1)}</div>
-                        </div>
+                        <div class="rating-value">${averageRating.toFixed(1)}</div>
                     </div>
-                    <div class="product-footer">
-                        <div class="delivery-time">Entrega em ${product.delivery} ${product.delivery === 1 ? 'dia' : 'dias'}</div>
-                        <div class="store-info">
-                            <div class="store-logo">
-                                <img src="https://via.placeholder.com/20/382D34/F1E1EB?text=${product.store.shortName.charAt(0)}" alt="${product.store.name}">
-                            </div>
-                            <div class="store-name" data-fullname="${product.store.name}">${product.store.shortName}</div>
+                    <div class="rating-item">
+                        <div class="rating-stars stars-yellow">
+                            ${generateStars(product.ratings.comments)}
                         </div>
+                        <div class="rating-value">${product.ratings.comments.toFixed(1)}</div>
+                    </div>
+                    <div class="rating-item">
+                        <div class="rating-stars stars-blue">
+                            ${generateStars(product.ratings.technical)}
+                        </div>
+                        <div class="rating-value">${product.ratings.technical.toFixed(1)}</div>
+                    </div>
+                    <div class="rating-item">
+                        <div class="rating-stars stars-pink">
+                            ${generateStars(product.ratings.reliability)}
+                        </div>
+                        <div class="rating-value">${product.ratings.reliability.toFixed(1)}</div>
                     </div>
                 </div>
-            `;
-            targetGrid.appendChild(card);
-        });
-        
-        setupTooltips(); // Atualiza tooltips para os novos produtos
-    }
+                <div class="product-footer">
+                    <div class="delivery-time">Entrega em ${product.delivery} ${product.delivery === 1 ? 'dia' : 'dias'}</div>
+                    <div class="store-info">
+                        <div class="store-logo">
+                            <img src="https://via.placeholder.com/20/382D34/F1E1EB?text=${product.store.shortName.charAt(0)}" alt="${product.store.name}">
+                        </div>
+                        <div class="store-name" data-fullname="${product.store.name}">${product.store.shortName}</div>
+                    </div>
+                </div>
+            </div>
+        `;
+        targetGrid.appendChild(card);
+    });
+    
+    setupTooltips(); // Mantenha esta linha se já existir no seu código
+}
+
+// FUNÇÃO AUXILIAR QUE DEVE SER ADICIONADA (coloque fora da displayProducts)
+function getSmartProductImage(product) {
+    // 1. Prepara termos de busca inteligentes
+    const mainTerm = product.name.split(' ')[0].toLowerCase();
+    const category = product.category ? product.category.toLowerCase().replace(/[^a-z]/g, '') : 'product';
+    const keywords = (product.keywords || []).slice(0, 2).join(',');
+    
+    // 2. Escolhe o melhor serviço de imagem por categoria
+    const services = [
+        `https://source.unsplash.com/featured/200x200/?${mainTerm},${category},${keywords},shopping`,
+        `https://loremflickr.com/200/200/${mainTerm},${category}`,
+        `https://api.lorem.space/image/${category === 'fashion' ? 'dress' : 'product'}?w=200&h=200`,
+        `https://placeimg.com/200/200/${category}`
+    ];
+    
+    return services[0]; // Usa o Unsplash como padrão (fallback automático no onerror)
+}
 
     // Sistema de busca corrigido
     function setupSearch() {
@@ -2094,7 +2139,7 @@
     });
 
     function refreshPage() {
-        location.reload();
+        location.reload(true);
     }
 
     // Inicializa o sistema
