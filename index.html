@@ -3,10 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>ValueTwin</title>
+    <link rel="shortcut icon" href="dots/LogoIcone.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <style>
         :root {
+            /* Cores novas */
+            --preto-licorico: #3C293B;
+            --marrom-kona: #5E415D;
             /* Cores Principais */
             --rosa-profundo: #F53A8E;
             --salmao: #FE8878;
@@ -14,8 +21,8 @@
             --lavanda-pastel: #A67BF6;
 
             /* Cores de Fundo */
-            --preto-licorico: #382D34;
-            --marrom-kona: #584752;
+            /* --preto-licorico: #382D34; */
+            /* --marrom-kona: #584752; */
             --preto-rocha: #2D2C39;
             --cinza-eclipse: #47455A;
 
@@ -32,6 +39,7 @@
             --estrela-comentarios: #FFD700;
             --estrela-tecnica: #1E90FF;
             --estrela-media: #FF69B4;
+            /* fonte */
         }
 
         * {
@@ -40,6 +48,7 @@
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+
 
         body {
             background-color: var(--preto-rocha);
@@ -62,7 +71,7 @@
         /* Botão do Tutorial */
             .tutorial-btn {
                 background-color: var(--lavanda-pastel);
-                color: var(--preto-rocha);
+                color: var(--texto-1);
                 border: none;
                 padding: 0.8rem 1.2rem;
                 border-radius: 0.3rem;
@@ -95,12 +104,13 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            cursor: pointer;
         }
+        .imglogo {
+            max-width: 9.8rem;
+            max-height: 9.8rem;
 
-        .logo i {
-            color: var(--rosa-profundo);
         }
-
         .search-bar {
             flex: 1;
             min-width: 250px;
@@ -352,12 +362,18 @@
         }
 
         .section-title {
+            font-family: Poppins;
             font-size: 1.5rem;
             margin-bottom: 1.5rem;
             color: var(--texto-4);
             position: relative;
             padding-left: 1rem;
+            font-family: "Poppins", sans-serif;
+            font-weight: 600 !important;
+            font-style: italic;
         }
+
+
 
         .section-title::before {
             content: '';
@@ -446,6 +462,35 @@
 
         .slider-next {
             right: 0;
+        }
+        .product-card .product-image {
+            width: 100%;
+            height: 200px; 
+            border-radius: 16px 16px 0 0; 
+            overflow: hidden;
+            background-color: var(--preto-rocha); 
+            border: 2px solid var(--lavanda-pastel); 
+        }
+
+        .product-card .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center; 
+            transition: transform 0.3s ease; 
+        }
+
+        /* Efeito hover para melhor interação*/
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        /* Para as imagens redondas (como nos partners) */
+        .partner-logo img {
+            width: 100% !important; 
+            height: 100% !important;
+            object-fit: cover;
+            border-radius: 50%;
         }
 
         /* Produtos em Destaque */
@@ -652,7 +697,7 @@
         .tutorial-thumbnail {
             position: relative;
             width: 100%;
-            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            padding-top: 56.25%; 
             background-color: var(--preto-rocha);
             overflow: hidden;
         }
@@ -749,7 +794,7 @@
             border-color: var(--lavanda-pastel);
         }
 
-        /* Footer */
+        /* ========== FOOTER ========== */
         footer {
             background-color: var(--preto-licorico);
             padding: 2rem;
@@ -791,6 +836,14 @@
             gap: 1rem;
         }
 
+        /* Container do dropdown */
+        .help-container {
+            position: relative;
+            width: 100%;
+            max-width: 250px;
+        }
+
+        /* Botão principal */
         .help-btn {
             background-color: var(--rosa-profundo);
             color: white;
@@ -799,41 +852,60 @@
             border-radius: 0.3rem;
             cursor: pointer;
             font-weight: bold;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
             text-align: left;
-            position: relative;
         }
 
         .help-btn:hover {
             background-color: var(--salmao);
         }
 
+        /* Opções do dropdown */
         .help-options {
             position: absolute;
-            bottom: 100%;
+            top: calc(100% + 5px);
             left: 0;
             width: 100%;
             background-color: var(--cinza-eclipse);
-            border-radius: 0.3rem 0.3rem 0 0;
-            overflow: hidden;
+            border-radius: 0.3rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 100;
             display: none;
+            overflow: hidden;
         }
 
         .help-options.active {
             display: block;
+            animation: fadeIn 0.2s ease-out;
         }
 
+        /* Itens do dropdown */
         .help-option {
             padding: 0.8rem 1.5rem;
             color: var(--texto-1);
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.2s;
         }
 
         .help-option:hover {
             background-color: var(--roxo-indigo);
         }
 
+        /* Ícone do botão */
+        .help-btn i {
+            transition: transform 0.3s;
+            margin-left: 0.5rem;
+        }
+
+        .help-btn.active i {
+            transform: rotate(180deg);
+        }
+
+        /* Botão de parceiro */
         .partner-btn {
             background-color: var(--roxo-indigo);
             color: white;
@@ -843,7 +915,9 @@
             cursor: pointer;
             font-weight: bold;
             transition: background-color 0.3s;
-            text-align: left;
+            text-align: center;
+            width: 100%;
+            max-width: 250px;
         }
 
         .partner-btn:hover {
@@ -858,6 +932,11 @@
             font-size: 0.9rem;
         }
 
+        /* Animação */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
         /* Responsividade */
         @media (max-width: 768px) {
             header {
@@ -932,14 +1011,74 @@
                 flex-direction: column;
             }
         }
+        /* Estilo para o botão "Ver Mais" */
+        .load-more-btn {
+        display: block;
+        margin: 2rem auto;
+        padding: 0.8rem 2rem;
+        background-color: var(--roxo-indigo);
+        color: white;
+        border: none;
+        border-radius: 0.3rem;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s;
+        }
+
+        .load-more-btn:hover {
+        background-color: var(--lavanda-pastel);
+        }
+
+        /* Tooltip */
+        .custom-tooltip {
+        position: absolute;
+        background-color: var(--preto-rocha);
+        color: var(--texto-1);
+        padding: 0.5rem 1rem;
+        border-radius: 0.3rem;
+        font-size: 0.9rem;
+        z-index: 1000;
+        pointer-events: none;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        max-width: 300px;
+        }
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 2rem;
+            color: var(--texto-2);
+            font-size: 1.2rem;
+        }
+
+        .load-more-btn {
+            display: block;
+            margin: 2rem auto;
+            padding: 0.8rem 2rem;
+            background-color: var(--roxo-indigo);
+            color: white;
+            border: none;
+            border-radius: 0.3rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .load-more-btn:hover {
+            background-color: var(--lavanda-pastel);
+        .product-image img {
+        object-fit: cover;
+        width: 100%;
+        height: 200px;
+        border-radius: 8px 8px 0 0;
+}
+}
     </style>
 </head>
 <body>
     <!-- Página Principal -->
     <div id="home-page">
         <header>
-            <div class="logo">
-                <i class="fas fa-star"></i> ValueTwin
+            <div class="logo" onclick="refreshPage()">
+                <img src="dots/Logo Text.png" alt="Logo" class="imglogo">
             </div>
             <div class="search-bar">
                 <input type="text" placeholder="O que você está procurando hoje?">
@@ -1296,11 +1435,11 @@
     <!-- Página Pós-Pesquisa -->
     <div id="search-page" style="display: none;">
         <header>
-            <div class="logo">
-                <i class="fas fa-star"></i> ValueTwin
+            <div class="logo" onclick="refreshPage()">
+                <img src="dots/Logo Text.png" alt="Logo" class="imglogo">
             </div>
             <div class="search-bar">
-                <input type="text" placeholder="O que você está procurando hoje?" value="ventilador">
+                <input type="text" placeholder="O que você está procurando hoje?">
                 <button><i class="fas fa-search"></i></button>
             </div>
             <div class="price-range">
@@ -1457,6 +1596,11 @@
 
     <!-- Página de Tutorial -->
     <div id="tutorial-page" style="display: none;">
+        <header>
+            <div class="logo" onclick="refreshPage()">
+                <img src="dots/Logo Text.png" alt="Logo" class="imglogo">
+            </div>
+        </header>
         <div class="tutorial-page">
             <h2 class="section-title">Como usar o ValueTwin</h2>
             <div class="tutorial-grid">
@@ -1534,7 +1678,7 @@
                 </div>
             </div>
         </div>
-
+        <div class="close" onclick="backaward()">X</div>
         <div class="video-modal" id="video-modal">
             <div class="modal-video-container">
                 <button class="close-modal" id="close-modal"><i class="fas fa-times"></i></button>
@@ -1574,196 +1718,465 @@
     </footer>
 
     <script>
-        // Filtros
-        document.getElementById('basic-filter-btn').addEventListener('click', function() {
-            this.classList.toggle('active');
-            document.getElementById('basic-filter-panel').classList.toggle('active');
-            document.getElementById('advanced-filter-panel').classList.remove('active');
-            document.getElementById('advanced-filter-btn').classList.remove('active');
-        });
+    document.addEventListener('DOMContentLoaded', function() {
+    // Variáveis globais
+    let allProducts = [];
+    let displayedProducts = 0;
+    const productsPerPage = 20;
+    const productsGrid = document.querySelector('.products-grid');
+    const loadMoreBtn = document.createElement('button');
+    loadMoreBtn.className = 'load-more-btn';
+    loadMoreBtn.textContent = 'Ver Mais';
 
-        document.getElementById('advanced-filter-btn').addEventListener('click', function() {
-            this.classList.toggle('active');
-            document.getElementById('advanced-filter-panel').classList.toggle('active');
-            document.getElementById('basic-filter-panel').classList.remove('active');
-            document.getElementById('basic-filter-btn').classList.remove('active');
-        });
+    // ========== FUNÇÕES EXISTENTES A SEREM MANTIDAS ========== //
+    function calculateAverageRating(ratings) {
+    const values = Object.values(ratings);
+    const sum = values.reduce((acc, curr) => acc + curr, 0);
+    return sum / values.length;
+}
 
-        // Filtros na página de pesquisa
-        document.getElementById('basic-filter-btn-search')?.addEventListener('click', function() {
-            alert('Abrir filtros básicos na página de pesquisa');
-        });
-
-        document.getElementById('advanced-filter-btn-search')?.addEventListener('click', function() {
-            alert('Abrir filtros avançados na página de pesquisa');
-        });
-
-        // Opções de filtro
-        document.querySelectorAll('.filter-option').forEach(option => {
-            option.addEventListener('click', function() {
-                this.classList.toggle('selected');
-            });
-        });
-
-        // Carrossel de promoções
-        let currentPromoSlide = 0;
-        const promoSlides = document.querySelectorAll('.promo-item');
-        const promoSlider = document.getElementById('promo-slide');
-
-        function updatePromoSlider() {
-            promoSlider.style.transform = `translateX(-${currentPromoSlide * 100}%)`;
+function generateStars(rating) {
+    const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 >= 0.5;
+    let stars = '';
+    
+    for (let i = 0; i < 5; i++) {
+        if (i < fullStars) {
+            stars += '<i class="fas fa-star"></i>';
+        } else if (i === fullStars && hasHalfStar) {
+            stars += '<i class="fas fa-star-half-alt"></i>';
+        } else {
+            stars += '<i class="far fa-star"></i>';
         }
+    }
+    return stars;
+}
+    // Filtros Básicos e Avançados (mantido igual)
+    document.getElementById('basic-filter-btn').addEventListener('click', function() {
+        this.classList.toggle('active');
+        document.getElementById('basic-filter-panel').classList.toggle('active');
+        document.getElementById('advanced-filter-panel').classList.remove('active');
+        document.getElementById('advanced-filter-btn').classList.remove('active');
+    });
 
-        document.getElementById('next-promo')?.addEventListener('click', function() {
-            currentPromoSlide = (currentPromoSlide + 1) % promoSlides.length;
-            updatePromoSlider();
+    document.getElementById('advanced-filter-btn').addEventListener('click', function() {
+        this.classList.toggle('active');
+        document.getElementById('advanced-filter-panel').classList.toggle('active');
+        document.getElementById('basic-filter-panel').classList.remove('active');
+        document.getElementById('basic-filter-btn').classList.remove('active');
+    });
+
+    // Filtros na página de pesquisa (mantido igual)
+    document.getElementById('basic-filter-btn-search')?.addEventListener('click', function() {
+        document.getElementById('basic-filter-panel').classList.toggle('active');
+    });
+
+    document.getElementById('advanced-filter-btn-search')?.addEventListener('click', function() {
+        document.getElementById('advanced-filter-panel').classList.toggle('active');
+    });
+
+    // Seleção de opções (mantido igual)
+    document.querySelectorAll('.filter-option').forEach(option => {
+        option.addEventListener('click', function() {
+            this.classList.toggle('selected');
         });
+    });
 
-        document.getElementById('prev-promo')?.addEventListener('click', function() {
-            currentPromoSlide = (currentPromoSlide - 1 + promoSlides.length) % promoSlides.length;
-            updatePromoSlider();
+    // Sliders com valores numéricos (mantido igual)
+    document.querySelectorAll('.slider-container input[type="range"]').forEach(slider => {
+        const valueDisplay = document.createElement('div');
+        valueDisplay.className = 'slider-value';
+        valueDisplay.textContent = slider.value;
+        slider.parentNode.appendChild(valueDisplay);
+        
+        slider.addEventListener('input', function() {
+            valueDisplay.textContent = this.value;
+            const percent = (this.value - this.min) / (this.max - this.min);
+            const thumbWidth = 15;
+            const offset = percent * (this.offsetWidth - thumbWidth) + (thumbWidth / 2);
+            valueDisplay.style.left = `calc(${percent * 100}% - ${offset * 0.05}px)`;
         });
+    });
 
-        // Auto-rotate promo carousel
-        setInterval(() => {
-            currentPromoSlide = (currentPromoSlide + 1) % promoSlides.length;
-            updatePromoSlider();
-        }, 5000);
+    // Aplicar filtros (mantido igual)
+    document.querySelectorAll('.apply-filters').forEach(button => {
+        button.addEventListener('click', function() {
+            alert('Filtros aplicados com sucesso!');
+        });
+    });
 
-        // Carrossel de lojas parceiras
-        let currentPartnerSlide = 0;
-        const partnerCards = document.querySelectorAll('.partner-card');
-        const partnerSlider = document.getElementById('partners-slider');
-        const cardsPerSlide = 4;
+    // Carrossel de promoções (mantido igual)
+    let currentPromoSlide = 0;
+    const promoSlides = document.querySelectorAll('.promo-item');
+    const promoSlider = document.getElementById('promo-slide');
 
-        function updatePartnerSlider() {
-            const cardWidth = partnerCards[0].offsetWidth + 32; // width + gap
-            const translateX = -currentPartnerSlide * cardWidth * cardsPerSlide;
-            partnerSlider.style.transform = `translateX(${translateX}px)`;
+    function updatePromoSlider() {
+        promoSlider.style.transform = `translateX(-${currentPromoSlide * 100}%)`;
+    }
+
+    document.getElementById('next-promo')?.addEventListener('click', function() {
+        currentPromoSlide = (currentPromoSlide + 1) % promoSlides.length;
+        updatePromoSlider();
+    });
+
+    document.getElementById('prev-promo')?.addEventListener('click', function() {
+        currentPromoSlide = (currentPromoSlide - 1 + promoSlides.length) % promoSlides.length;
+        updatePromoSlider();
+    });
+
+    setInterval(() => {
+        currentPromoSlide = (currentPromoSlide + 1) % promoSlides.length;
+        updatePromoSlider();
+    }, 5000);
+
+    // Carrossel de lojas parceiras (mantido igual)
+    let currentPartnerSlide = 0;
+    const partnerCards = document.querySelectorAll('.partner-card');
+    const partnerSlider = document.getElementById('partners-slider');
+    const cardsPerSlide = 4;
+
+    function updatePartnerSlider() {
+        const cardWidth = partnerCards[0].offsetWidth + 32;
+        const translateX = -currentPartnerSlide * cardWidth * cardsPerSlide;
+        partnerSlider.style.transform = `translateX(${translateX}px)`;
+    }
+
+    document.querySelector('.slider-prev')?.addEventListener('click', function() {
+        if (currentPartnerSlide > 0) {
+            currentPartnerSlide--;
+            updatePartnerSlider();
         }
+    });
 
-        document.querySelector('.slider-prev')?.addEventListener('click', function() {
-            if (currentPartnerSlide > 0) {
-                currentPartnerSlide--;
-                updatePartnerSlider();
-            }
+    document.querySelector('.slider-next')?.addEventListener('click', function() {
+        if (currentPartnerSlide < Math.ceil(partnerCards.length / cardsPerSlide) - 1) {
+            currentPartnerSlide++;
+            updatePartnerSlider();
+        }
+    });
+
+    window.addEventListener('resize', updatePartnerSlider);
+
+    // Tutorial videos (mantido igual)
+    const tutorialItems = document.querySelectorAll('.tutorial-item');
+    const videoModal = document.getElementById('video-modal');
+    const modalVideo = document.getElementById('modal-video');
+    const videoTranscript = document.getElementById('video-transcript');
+    const closeModal = document.getElementById('close-modal');
+
+    const videoTranscripts = {
+        tutorial1: "As estrelas coloridas representam diferentes métricas de avaliação...",
+        // ... (mantenha os outros transcripts)
+    };
+
+    tutorialItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const videoId = this.getAttribute('data-video');
+            const videoSrc = this.querySelector('video').getAttribute('src');
+            
+            modalVideo.setAttribute('src', videoSrc);
+            videoTranscript.innerHTML = `<h3>${this.querySelector('.tutorial-title').textContent}</h3><p>${videoTranscripts[videoId]}</p>`;
+            
+            videoModal.classList.add('active');
+            modalVideo.play();
         });
+    });
 
-        document.querySelector('.slider-next')?.addEventListener('click', function() {
-            if (currentPartnerSlide < Math.ceil(partnerCards.length / cardsPerSlide) - 1) {
-                currentPartnerSlide++;
-                updatePartnerSlider();
-            }
-        });
+    closeModal.addEventListener('click', function() {
+        videoModal.classList.remove('active');
+        modalVideo.pause();
+        modalVideo.currentTime = 0;
+    });
 
-        // Ajustar slider na mudança de tamanho da tela
-        window.addEventListener('resize', updatePartnerSlider);
-
-        // Tutorial videos
-        const tutorialItems = document.querySelectorAll('.tutorial-item');
-        const videoModal = document.getElementById('video-modal');
-        const modalVideo = document.getElementById('modal-video');
-        const videoTranscript = document.getElementById('video-transcript');
-        const closeModal = document.getElementById('close-modal');
-
-        // Transcripts para cada vídeo (simulado)
-        const videoTranscripts = {
-            tutorial1: "As estrelas coloridas representam diferentes métricas de avaliação. A estrela verde indica a relação preço/benefício, a amarela mostra a qualidade segundo comentários humanos e a azul representa a qualidade técnica com base na ficha técnica do produto.",
-            tutorial2: "Nosso sistema utiliza inteligência artificial para detectar padrões em comentários que podem indicar avaliações falsas ou de bots. Analisamos linguagem, repetição de frases, histórico do avaliador e outros fatores para garantir que apenas comentários genuínos sejam considerados.",
-            tutorial3: "A análise técnica é feita comparando as especificações do produto com padrões de mercado para sua categoria. Avaliamos fatores como desempenho, durabilidade, eficiência energética e recursos extras para determinar a pontuação técnica.",
-            tutorial4: "O índice de confiabilidade leva em conta a reputação da marca, histórico de avaliações dos produtos, tempo no mercado e presença online. Quanto maior a pontuação, mais confiável consideramos o produto e a loja.",
-            tutorial5: "Use os filtros para refinar sua busca por preço, avaliação, características técnicas e outros critérios. Você pode alternar entre filtros básicos e avançados conforme sua necessidade.",
-            tutorial6: "Selecione até 3 produtos para comparar lado a lado. O sistema destacará as diferenças em preço, avaliações e características técnicas para ajudar você a tomar a melhor decisão.",
-            tutorial7: "Configure alertas para ser notificado quando um produto que você está interessado atingir uma determinada faixa de preço ou quando um produto com melhor avaliação for encontrado.",
-            tutorial8: "Salve produtos na sua lista de favoritos para acompanhar seus itens preferidos e receber atualizações sobre eles. Você pode acessar sua lista a qualquer momento.",
-            tutorial9: "Faça upload de uma imagem de um produto que deseja encontrar. Nosso sistema buscará itens similares com base na imagem, ajudando você a encontrar exatamente o que precisa."
-        };
-
-        tutorialItems.forEach(item => {
-            item.addEventListener('click', function() {
-                const videoId = this.getAttribute('data-video');
-                const videoSrc = this.querySelector('video').getAttribute('src');
-                
-                modalVideo.setAttribute('src', videoSrc);
-                videoTranscript.innerHTML = `<h3>${this.querySelector('.tutorial-title').textContent}</h3><p>${videoTranscripts[videoId]}</p>`;
-                
-                videoModal.classList.add('active');
-                modalVideo.play();
-            });
-        });
-
-        closeModal.addEventListener('click', function() {
-            videoModal.classList.remove('active');
-            modalVideo.pause();
-            modalVideo.currentTime = 0;
-        });
-
-        // Botão de ajuda no footer
-        const helpBtn = document.getElementById('help-btn');
-        const helpOptions = document.getElementById('help-options');
-
-        helpBtn?.addEventListener('click', function() {
+    // Menu Ajuda (mantido igual)
+    const helpBtn = document.getElementById('help-btn');
+    const helpOptions = document.getElementById('help-options');
+    
+    if (helpBtn && helpOptions) {
+        helpBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
             helpOptions.classList.toggle('active');
         });
-
-        // Fechar opções de ajuda ao clicar fora
+        
         document.addEventListener('click', function(e) {
-            if (!helpBtn?.contains(e.target) && !helpOptions?.contains(e.target)) {
-                helpOptions?.classList.remove('active');
+            if (!helpBtn.contains(e.target) && !helpOptions.contains(e.target)) {
+                helpOptions.classList.remove('active');
             }
         });
 
-        // Navegação entre páginas (simulada)
-        function showPage(pageId) {
-            document.getElementById('home-page').style.display = 'none';
-            document.getElementById('search-page').style.display = 'none';
-            document.getElementById('tutorial-page').style.display = 'none';
-            
-            document.getElementById(pageId).style.display = 'block';
+        document.querySelectorAll('.help-option').forEach(option => {
+            option.addEventListener('click', function() {
+                alert('Opção selecionada: ' + this.textContent);
+                helpOptions.classList.remove('active');
+            });
+        });
+    }
+
+    // ========== FUNÇÕES MODIFICADAS/CORRIGIDAS ========== //
+
+    // Navegação entre páginas
+    function showPage(pageId) {
+        document.getElementById('home-page').style.display = 'none';
+        document.getElementById('search-page').style.display = 'none';
+        document.getElementById('tutorial-page').style.display = 'none';
+        
+        document.getElementById(pageId).style.display = 'block';
+        
+        // Se for a página de pesquisa, garante que o input está vazio
+        if (pageId === 'search-page') {
+            document.querySelector('#search-page .search-bar input').value = '';
         }
+    }
 
-        // Simular busca (para demonstração)
-        document.querySelector('.search-bar button').addEventListener('click', function() {
-            const searchTerm = document.querySelector('.search-bar input').value.trim();
-            if (searchTerm.toLowerCase() === 'tutorial') {
-                showPage('tutorial-page');
-            } else if (searchTerm) {
-                showPage('search-page');
+    // Carrega produtos do JSON
+    async function fetchProducts() {
+        try {
+            const response = await fetch('products.json');
+            allProducts = await response.json();
+            
+            // Verifica se é um array
+            if (!Array.isArray(allProducts)) {
+                console.error('O arquivo JSON não contém um array de produtos');
+                allProducts = [];
             }
-        });
-
-        // Permitir busca com Enter
-        document.querySelector('.search-bar input').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                document.querySelector('.search-bar button').click();
+            
+            displayProducts(allProducts.slice(0, productsPerPage));
+            displayedProducts = productsPerPage;
+            
+            if (allProducts.length > productsPerPage) {
+                productsGrid.after(loadMoreBtn);
             }
-        });
+        } catch (error) {
+            console.error('Erro ao carregar produtos:', error);
+        }
+    }
 
-        // Tooltips para nomes de produtos e lojas
-        document.querySelectorAll('.product-name').forEach(name => {
-            name.addEventListener('mouseenter', function() {
-                // Tooltip é exibido via CSS
+    // Exibe produtos no grid (modificada para aceitar grid específico)
+    // FUNÇÃO PRONTA PARA COPIAR E COLAR (substitua apenas a displayProducts existente)
+function displayProducts(products, targetGrid = productsGrid) {
+    targetGrid.innerHTML = ''; // Limpa o grid
+    
+    products.forEach(product => {
+        const averageRating = calculateAverageRating(product.ratings);
+        const imageUrl = product.image || getSmartProductImage(product);
+        
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.innerHTML = `
+            <div class="product-image">
+                <img src="${imageUrl}" alt="${product.name}" 
+                     onerror="this.onerror=null;this.src='https://via.placeholder.com/200/382D34/F1E1EB?text=${product.name.substring(0,15).replace(/\s+/g, '+')}'">
+            </div>
+            <div class="product-info">
+                <div class="product-name" data-fullname="${product.name}${product.description ? ' - ' + product.description : ''}">${product.name}</div>
+                <div class="product-price">R$ ${product.price.toFixed(2).replace('.', ',')}</div>
+                <div class="product-ratings">
+                    <div class="rating-item">
+                        <div class="rating-stars stars-green">
+                            ${generateStars(averageRating)}
+                        </div>
+                        <div class="rating-value">${averageRating.toFixed(1)}</div>
+                    </div>
+                    <div class="rating-item">
+                        <div class="rating-stars stars-yellow">
+                            ${generateStars(product.ratings.comments)}
+                        </div>
+                        <div class="rating-value">${product.ratings.comments.toFixed(1)}</div>
+                    </div>
+                    <div class="rating-item">
+                        <div class="rating-stars stars-blue">
+                            ${generateStars(product.ratings.technical)}
+                        </div>
+                        <div class="rating-value">${product.ratings.technical.toFixed(1)}</div>
+                    </div>
+                    <div class="rating-item">
+                        <div class="rating-stars stars-pink">
+                            ${generateStars(product.ratings.reliability)}
+                        </div>
+                        <div class="rating-value">${product.ratings.reliability.toFixed(1)}</div>
+                    </div>
+                </div>
+                <div class="product-footer">
+                    <div class="delivery-time">Entrega em ${product.delivery} ${product.delivery === 1 ? 'dia' : 'dias'}</div>
+                    <div class="store-info">
+                        <div class="store-logo">
+                            <img src="https://via.placeholder.com/20/382D34/F1E1EB?text=${product.store.shortName.charAt(0)}" alt="${product.store.name}">
+                        </div>
+                        <div class="store-name" data-fullname="${product.store.name}">${product.store.shortName}</div>
+                    </div>
+                </div>
+            </div>
+        `;
+        targetGrid.appendChild(card);
+    });
+    
+}
+
+// FUNÇÃO AUXILIAR QUE DEVE SER ADICIONADA (coloque fora da displayProducts)
+function getSmartProductImage(product) {
+    // 1. Prepara termos de busca inteligentes
+    const mainTerm = product.name.split(' ')[0].toLowerCase();
+    const category = product.category ? product.category.toLowerCase().replace(/[^a-z]/g, '') : 'product';
+    const keywords = (product.keywords || []).slice(0, 2).join(',');
+    
+    // 2. Escolhe o melhor serviço de imagem por categoria
+    const services = [
+        `https://source.unsplash.com/featured/200x200/?${mainTerm},${category},${keywords},shopping`,
+        `https://loremflickr.com/200/200/${mainTerm},${category}`,
+        `https://api.lorem.space/image/${category === 'fashion' ? 'dress' : 'product'}?w=200&h=200`,
+        `https://placeimg.com/200/200/${category}`
+    ];
+    
+    return services[0]; // Usa o Unsplash como padrão (fallback automático no onerror)
+}
+
+    // Sistema de busca corrigido
+    function setupSearch() {
+        const searchInputs = document.querySelectorAll('.search-bar input');
+        
+        searchInputs.forEach(input => {
+            // Remove valor padrão ao focar
+            input.addEventListener('focus', function() {
+                if (this.value === 'ventilador') this.value = '';
+            });
+            
+            // Configura evento de tecla
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    performSearch(this.value.trim());
+                }
             });
         });
-
-        document.querySelectorAll('.store-name').forEach(store => {
-            store.addEventListener('mouseenter', function() {
-                // Tooltip é exibido via CSS
+        
+        const searchButtons = document.querySelectorAll('.search-bar button');
+        searchButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const input = this.parentElement.querySelector('input');
+                performSearch(input.value.trim());
             });
         });
+    }
+    
+    function performSearch(term) {
+        if (!term) {
+            alert('Por favor, digite um termo de busca');
+            return;
+        }
+        
+        showPage('search-page');
+        const searchGrid = document.querySelector('#search-page .products-grid');
+        const searchTerm = term.toLowerCase();
+        
+        const results = allProducts.filter(product => 
+            product.name.toLowerCase().includes(searchTerm) ||
+            (product.description && product.description.toLowerCase().includes(searchTerm)) ||
+            product.store.name.toLowerCase().includes(searchTerm) ||
+            product.store.shortName.toLowerCase().includes(searchTerm) ||
+            (product.keywords && product.keywords.some(keyword => keyword.toLowerCase().includes(searchTerm)))
+        );
+        
+        if (results.length > 0) {
+            displayProducts(results.slice(0, productsPerPage), searchGrid);
+            displayedProducts = productsPerPage;
+            
+            if (results.length > productsPerPage) {
+                searchGrid.after(loadMoreBtn);
+                loadMoreBtn.onclick = function() {
+                    const nextProducts = results.slice(displayedProducts, displayedProducts + productsPerPage);
+                    displayProducts(nextProducts, searchGrid);
+                    displayedProducts += nextProducts.length;
+                    
+                    if (displayedProducts >= results.length) {
+                        loadMoreBtn.remove();
+                    }
+                };
+            } else {
+                loadMoreBtn.remove();
+            }
+        } else {
+            searchGrid.innerHTML = '<p class="no-results">Nenhum produto encontrado para "' + term + '"</p>';
+            loadMoreBtn.remove();
+        }
+    }
 
-        // Ordenação
+    // Sistema de ordenação (modificado para funcionar em qualquer grid)
+    function setupSorting() {
         document.querySelectorAll('.sort-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
-                // Aqui iria a lógica de ordenação real
+                
+                const criteria = this.textContent.trim();
+                const currentPage = document.querySelector('[id$="-page"]:not([style*="none"])').id;
+                const grid = document.querySelector(`#${currentPage} .products-grid`);
+                
+                sortProducts(grid, criteria);
             });
         });
-        // Botão do Tutorial
-        document.getElementById('tutorial-btn').addEventListener('click', function() {
-            showPage('tutorial-page');
+    }
+    
+    function sortProducts(gridElement, criteria) {
+        const products = Array.from(gridElement.querySelectorAll('.product-card'));
+        
+        products.sort((a, b) => {
+            const priceA = parseFloat(a.querySelector('.product-price').textContent.replace('R$ ', '').replace(',', '.'));
+            const priceB = parseFloat(b.querySelector('.product-price').textContent.replace('R$ ', '').replace(',', '.'));
+            const ratingA = parseFloat(a.querySelector('.rating-item:first-child .rating-value').textContent);
+            const ratingB = parseFloat(b.querySelector('.rating-item:first-child .rating-value').textContent);
+            
+            switch(criteria) {
+                case 'Preço': return priceA - priceB;
+                case 'Média de Avaliação': return ratingB - ratingA;
+                case 'Próximo de Você': return 0; // Implemente lógica de geolocalização se necessário
+                default: return 0; // Relevância
+            }
         });
+        
+        gridElement.innerHTML = '';
+        products.forEach(product => gridElement.appendChild(product));
+    }
+
+    // Tooltips (mantido igual)
+    function setupTooltips() {
+        document.querySelectorAll('.product-name, .store-name').forEach(element => {
+            element.addEventListener('mouseenter', showTooltip);
+            element.addEventListener('mouseleave', hideTooltip);
+        });
+        
+        function showTooltip() {
+            const tooltip = document.createElement('div');
+            tooltip.className = 'custom-tooltip';
+            tooltip.textContent = this.getAttribute('data-fullname');
+            document.body.appendChild(tooltip);
+            
+            const rect = this.getBoundingClientRect();
+            tooltip.style.left = `${rect.left + window.scrollX}px`;
+            tooltip.style.top = `${rect.top + window.scrollY - 35}px`;
+        }
+        
+        function hideTooltip() {
+            const tooltip = document.querySelector('.custom-tooltip');
+            if (tooltip) tooltip.remove();
+        }
+    }
+
+    // Botão do Tutorial (mantido igual)
+    document.getElementById('tutorial-btn').addEventListener('click', function() {
+        showPage('tutorial-page');
+    });
+
+    function refreshPage() {
+        location.reload(true);
+    }
+
+    // Inicializa o sistema
+    fetchProducts();
+    setupSearch();
+    setupSorting();
+    setupTooltips();
+});
+        
     </script>
 </body>
 </html>
